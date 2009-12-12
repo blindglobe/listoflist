@@ -7,7 +7,7 @@
   :description "makes listoflist an xarray'able data structure." 
   :author "AJ Rossini"
   :license "LLGPL"
-  :serial t
+  ;; :serial t
+  :depends-on (:xarray :lift)
   :components ((:file "package")
-	       (:file "listoflist"))
-  :depends-on (:xarray))
+	       (:file "listoflist" :depend-on ("package")))) ; depends-on needed if we remove serial.

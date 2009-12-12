@@ -1,6 +1,6 @@
 ;;; -*- mode: lisp -*-
 
-;;; Time-stamp: <2009-12-10 08:15:19 tony>
+;;; Time-stamp: <2009-12-12 07:36:03 tony>
 ;;; Creation:   <2009-12-10 08:10:39 tony>
 ;;; File:       package.lisp
 ;;; Author:     AJ Rossini <blindglobe@gmail.com>
@@ -17,22 +17,22 @@
 ;;; version..   Think, "21st Century Schizoid Man".
 
 (defpackage :listoflist
-  (:documentation "xarray support for listoflist data structures.")
+  (:documentation "XARRAY support for list-of-list data structures.")
+  (:nicknames :lol)
   (:use :common-lisp
 	:xarray)
   (:export xref ))
 
 (defpackage :listoflist-user
-  (:documentation "xarray support for listoflist data structures.")
+  (:documentation "verification, sandbox, and illustration package for LISTOFLIST.")
   (:nicknames :lol-user)
   (:use :common-lisp
 	:xarray
 	:listoflist))
-;; no exports, just for verification, illustration, and tinkering
 
 (defpackage :listoflist-test
-  (:documentation "unit-testing structure for LISTOFLIST.")
-  (:nicknames :lol-user)
+  (:documentation "unit-testing structure for LISTOFLIST using LIFT.")
+  (:nicknames :lol-test)
   (:use :common-lisp
 	:xarray
 	:listoflist
