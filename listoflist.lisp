@@ -1,6 +1,6 @@
 ;;; -*- mode: lisp -*-
 
-;;; Time-stamp: <2009-09-02 08:10:15 tony>
+;;; Time-stamp: <2009-12-09 09:20:35 tony>
 ;;; Creation:   <2008-09-08 08:06:30 tony>
 ;;; File:       listoflist.lisp
 ;;; Author:     AJ Rossini <blindglobe@gmail.com>
@@ -13,12 +13,12 @@
 ;;; 'releases'.  Our software 'escapes', leaving a bloody trail of
 ;;; designers and quality assurance people in its wake.
 
+(in-package :listoflist)
 
-(in-package :xarray)
-
-;;; ListOfList  is another useful xrefable object.
-;;; The interface does NOT map to CL functions in a straightforward
-;;; manner, unlike arrays.  So it makes a good example of a non-standard 
+;;; LISTOFLIST is another useful xrefable object.  The interface does
+;;; NOT map to CL functions in a straightforward manner, unlike
+;;; arrays.  So it makes a good example of a non-standard underlying
+;;; data structure that we'd like for XARRAY.
 
 ;;; Thoughts for organization: there are 2 general flavors of
 ;;; activities.  The first is that we do list-of-list to list-of-list
@@ -72,8 +72,6 @@ type list)."
       (check-type curr-elt list)
       (when (not (= n (length curr-elt)))
 	(error "Element ~A does not match initial element length." i)))))
-
-
 
 (defun transpose-listoflist (listoflist)
   "This function does the moral-equivalent of a matrix transpose on a
