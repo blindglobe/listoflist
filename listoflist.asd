@@ -10,4 +10,4 @@
   ;; :serial t
   :depends-on (:xarray :lift)
   :components ((:file "package")
-	       (:file "listoflist" :depend-on ("package")))) ; depends-on needed if we remove serial.
+	       (:file "listoflist" :depends-on ("package")))) ; depends-on needed if we remove serial.
