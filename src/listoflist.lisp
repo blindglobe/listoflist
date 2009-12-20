@@ -1,6 +1,6 @@
 ;;; -*- mode: lisp -*-
 
-;;; Time-stamp: <2009-12-20 12:52:06 tony>
+;;; Time-stamp: <2009-12-20 20:59:58 tony>
 ;;; Creation:   <2008-09-08 08:06:30 tony>
 ;;; File:       listoflist.lisp
 ;;; Author:     AJ Rossini <blindglobe@gmail.com>
@@ -72,16 +72,15 @@ return T/nil based on equality."
        ;; (loop over x and verify same tree as y)
        ))
 
-(defun lists-of-same-size (args)
-  "WRITEME!
- (reduce #'(lambda (x y)
-	      (if (= x y) y -1))
-	  (mapcar #'length (list *x1* *x2* *x3*)))
- (reduce #'(lambda (x y)
-	      (if (= x y) y -1))  (list 2 3 2))
-
-"
-  nil)
+(defun lists-of-same-size (lists)
+  "WRITEME!  Take a list of list, and verify that the sublists are all of the same size.
+returns size-of-sublist if all sublists same size, otherwise nil"
+  (let ((result (reduce #'(lambda (x y)
+			    (if (= x y) y -1))
+			(mapcar #'length lists))))
+    (if (= -1 result)
+	nil
+	result)))
 
 #|
   (defparameter *mdfl-test*
@@ -89,6 +88,17 @@ return T/nil based on equality."
             (list 'b 2 1.1)
             (list 'c 1 2.0)
             (list 'd 2 3.0)))
+  (lists-of-same-size *mdfl-test*)
+
+  (defparameter *mdfl-test2*
+      (list (list 'a 1 2.1)
+            (list 'b 2 1.1)
+            (list 'c 1 )
+            (list 'd 2 3.0)))
+  (lists-of-same-size *mdfl-test2*)
+
+
+
   (length *mdfl-test*)
   (length (elt *mdfl-test* 0))
 
