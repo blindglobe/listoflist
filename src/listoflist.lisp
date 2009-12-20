@@ -37,27 +37,6 @@
 ;; the top-level list with a property to check orientation
 ;; (row-major/column-major), but this hasn't been done yet.
 
-
-#|
-;; Test cases:
- (and T T nil T)
- (and T T T)
- (defparameter *x1* (list 1 2 3))
- (defparameter *x2* (list 1 2 3))
- (defparameter *x3* (list 1 2 3 4))
- (defparameter *x4* (list 1 2 3))
- (reduce #'(lambda (x y)
-	      (if (= x y) y -1))
-	  (mapcar #'length (list *x1* *x2* *x3*)))
- (reduce #'(lambda (x y)
-	      (if (= x y) y -1))  (list 2 3 2))
- (lists-of-same-size *x1* *x2* *x4*) ; => T
- (lists-of-same-size *x1* *x3* *x4*) ; => F
- (lists-of-same-size *x1* *x2* *x3*) ; => F
- (lists-of-same-size *x3* *x1* *x3*) ; => F
-|#
-
-
 ;;; IN PROGRESS!
 
 (defun listoflistp (x &key (ragged T))
