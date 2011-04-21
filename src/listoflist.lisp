@@ -1,6 +1,6 @@
 ;;; -*- mode: lisp -*-
 
-;;; Time-stamp: <2009-12-20 21:51:57 tony>
+;;; Time-stamp: <2011-04-16 11:45:57 tony>
 ;;; Creation:   <2008-09-08 08:06:30 tony>
 ;;; File:       listoflist.lisp
 ;;; Author:     AJ Rossini <blindglobe@gmail.com>
@@ -83,6 +83,15 @@ returns size-of-sublist if all sublists same size, otherwise nil"
 	result)))
 
 
+(defun listsoflists-consistent-dimensions-p (&rest list-of-list-names)
+  "Check if the lengths of the lists are equal (T, otherwise NIL), to
+justify further processing and initial conditions."
+  (if (< 0  (reduce #'(lambda (x y) (if  (= x y) y -1))
+		    (mapcar #'length list-of-list-names)))
+      T nil))
+
+
+
 ;;;; XARRAY INTERFACE
 
 (defmethod xtype ((object list))
@@ -98,6 +107,38 @@ returns size-of-sublist if all sublists same size, otherwise nil"
   "Basically, assuming coherently sized object, return number of
 nested lists in first object."
   (length (xdims object)))
+
+
+
+
+(defun listoflists-dimensions (lol)
+  "We assume row-major, that is each sublist denotes a row, and columns are formed by taking the jth element from each list to form the jth column"
+  (list (length lol)
+	(length (map 'list #'(lambda (x) (declare (ignore x)) 1) lol))))
+
+#|
+ (defparameter *lol-1*  (list (list 1 2 3 4)
+			     (list 5 6 7 8)))
+ (map 'list #'list *lol-1*)
+ (map 'list (lambda (x) x) *lol-1*)
+ (listoflists-dimensions *lol-1*)
+
+
+
+ (defun listoflists->matrix-like (lol &optional (coerce-to 'double-float))
+  (let ((dims (loop lol counting number of subunits, first number is
+		 number in inside, second is nil if they don't all
+		 equal each other))
+	)
+    (let ((result (apply #'make-matrix dims))
+	  )
+      (loop-over-lol counting i j and setting value, and
+	   (setf (mref result i j) value)))  )  )
+
+ (defun matrix-like->listoflists ())
+ (defun matrix-like->array ())
+ (defun array->matrix-like ())
+|#
 
 (defmethod xdims ((object list))
 #|
