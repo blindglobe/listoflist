@@ -1,6 +1,6 @@
 ;;; -*- mode: lisp -*-
 
-;;; Time-stamp: <2011-04-16 11:45:57 tony>
+;;; Time-stamp: <2012-10-06 09:05:39 tony>
 ;;; Creation:   <2008-09-08 08:06:30 tony>
 ;;; File:       listoflist.lisp
 ;;; Author:     AJ Rossini <blindglobe@gmail.com>
@@ -39,22 +39,26 @@
 
 ;;; IN PROGRESS!
 
-(defun listoflistp (x &key (ragged T))
+(defun listoflistp (x &key (ragged T) (vartypes nil))
   "Test for conformance of structure: list whose sublists are of the
 same size (if ragged is T, then just test that list has elements of
 type list)."
-  (declare (ignore ragged))
-  (check-type x list)
+  (declare (ignore ragged vartypes))
+  ;; (check-type x list) ;; FIXME: need to check first embedded list as well
   (dotimes (i (length x))
     (let ((n (length (elt x 0)))
 	  (curr-elt (elt x i)))
-      (check-type curr-elt list)
+      (check-type curr-elt (elt vartypes i))
       (when (not (= n (length curr-elt)))
 	(error "Element ~A does not match initial element length." i)))))
 
 (defun transpose-listoflist (listoflist)
   "This function does the moral-equivalent of a matrix transpose on a
-list-of-lists data structure"
+rectangular list-of-lists data structure.
+
+Assumes listoflist is rectangular, need to see what happens if
+ragged (or at least check).  Could use the listoflistp predicate to
+confirm."
   (apply #'mapcar #'list listoflist))
 
 ;; (defparameter LOL-2by3 (list (list 1 2) (list 3 4) (list 5 6)))
@@ -203,6 +207,10 @@ numeric-type-classifier."
 coerced to element-type, where the elemen-type is obtained using
 numeric-type-classifier."
   (apply #'carray (numeric-type-classifier elements) dimensions elements))
+
+(defun array->listoflist (arr &key (type 'rowmajor))
+  "FIXME: need to write this."
+  (assert nil))
 
 
 (defun listoflist->array (lol &key (type 'row-major))
