@@ -1,4 +1,0 @@
-
-The LISTOFLIST package (depends on xarray) contains functions and
-methods for handling list-of-lists as array substitutes.  The general
-API is that of XARRAY.
