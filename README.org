@@ -10,7 +10,6 @@
   This is part of the core suite of Common Lisp Statistics System
   (CLS) packages.
 
-
 * Tasks to do
 
 Originally the following was in the TODO.lisp file.
@@ -49,15 +48,21 @@ Originally the following was in the TODO.lisp file.
 
 ** Unit tests
 
+#+NAME UnitTestExec
 #+BEGIN_SRC lisp :tangle "TODO.lisp"
-(in-package :lisp-stat-unittests)
-;; tests = 2, failures = 0, errors = 2
+(in-package :listoflist-unittests)
+;; (describe (run-tests :suite 'lol-ut))   ;; only from commandline
 (run-tests :suite 'lol-ut)
-(describe (run-tests :suite 'lol-ut))
 #+END_SRC
+
+#+RESULTS:
+: #<Results for LOL-UT 5 Tests, 3 Errors>
+
+
 
 ** Example Use
 
+#+NAME Examples
 #+BEGIN_SRC lisp :tangle "TODO.lisp"
 (in-package :lol-user)
 
