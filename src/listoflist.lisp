@@ -1,6 +1,6 @@
 ;;; -*- mode: lisp -*-
 
-;;; Time-stamp: <2012-10-06 09:05:39 tony>
+;;; Time-stamp: <2012-10-06 09:33:52 tony>
 ;;; Creation:   <2008-09-08 08:06:30 tony>
 ;;; File:       listoflist.lisp
 ;;; Author:     AJ Rossini <blindglobe@gmail.com>
@@ -48,7 +48,7 @@ type list)."
   (dotimes (i (length x))
     (let ((n (length (elt x 0)))
 	  (curr-elt (elt x i)))
-      (check-type curr-elt (elt vartypes i))
+      ;; (check-type curr-elt (elt vartypes i)) ;; need to do type checking
       (when (not (= n (length curr-elt)))
 	(error "Element ~A does not match initial element length." i)))))
 
