@@ -1,6 +1,6 @@
 ;;; -*- mode: lisp -*-
 
-;;; Time-stamp: <2009-12-12 08:23:51 tony>
+;;; Time-stamp: <2012-10-06 09:24:46 tony>
 ;;; Creation:   <2009-12-10 08:10:39 tony>
 ;;; File:       listoflist.asd
 ;;; Author:     AJ Rossini <blindglobe@gmail.com>
@@ -26,7 +26,6 @@
   :description "makes listoflist an xarray'able data structure." 
   :author "AJ Rossini"
   :license "MIT"
-  ;; :serial t
   :depends-on (:xarray :lift)
   :components
   ((:module
@@ -34,12 +33,10 @@
     :pathname #p"src/"
     :components 
     ((:file "package")
-     (:file "listoflist" :depends-on ("package")))) ; depends-on needed if we remove serial.
-
+     (:file "listoflist" :depends-on ("package"))))
    (:module
     "unittest"
     :pathname #p"src/"
     :depends-on ("src")
     :components
-    ((:file "unittests")))
-   ))
+    ((:file "unittests")))))
