@@ -1,6 +1,6 @@
 ;;; -*- mode: lisp -*-
 
-;;; Time-stamp: <2012-10-06 09:33:52 tony>
+;;; Time-stamp: <2012-10-08 16:55:46 tony>
 ;;; Creation:   <2008-09-08 08:06:30 tony>
 ;;; File:       listoflist.lisp
 ;;; Author:     AJ Rossini <blindglobe@gmail.com>
@@ -210,6 +210,7 @@ numeric-type-classifier."
 
 (defun array->listoflist (arr &key (type 'rowmajor))
   "FIXME: need to write this."
+  (declare (ignore arr type))
   (assert nil))
 
 
