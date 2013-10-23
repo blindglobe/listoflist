@@ -1,10 +1,10 @@
 ;;; -*- mode: lisp -*-
 
-;;; Time-stamp: <2009-12-20 21:45:45 tony>
+;;; Time-stamp: <2013-02-23 14:11:01 tony>
 ;;; Creation:   <2009-12-10 08:10:39 tony>
 ;;; File:       package.lisp
 ;;; Author:     AJ Rossini <blindglobe@gmail.com>
-;;; Copyright:  (c)2009--, AJ Rossini.  See file LICENSE.mit in
+;;; Copyright:  (c)2009--2013, AJ Rossini.  See file LICENSE.mit in
 ;;;             top-level directory for information.
 ;;; Purpose:    package specification for LISTOFLIST
 
@@ -29,7 +29,8 @@
    xeltype xtype xrank xdims xref-writeable-p xref listoflist->array ))
 
 (defpackage :listoflist-user
-  (:documentation "verification, sandbox, and illustration package for LISTOFLIST.")
+  (:documentation "verification, sandbox, and illustration package for
+    LISTOFLIST.")
   (:nicknames :lol-user)
   (:use :common-lisp
 	:xarray

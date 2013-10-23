@@ -1,10 +1,10 @@
 ;;; -*- mode: lisp -*-
 
-;;; Time-stamp: <2012-10-08 16:55:46 tony>
+;;; Time-stamp: <2013-10-23 08:25:16 tony>
 ;;; Creation:   <2008-09-08 08:06:30 tony>
 ;;; File:       listoflist.lisp
 ;;; Author:     AJ Rossini <blindglobe@gmail.com>
-;;; Copyright:  (c) 2007-2008, AJ Rossini <blindglobe@gmail.com>.  BSD.
+;;; Copyright:  (c) 2007-2013, AJ Rossini <blindglobe@gmail.com>.  BSD.
 ;;; Purpose:    Manipulating structures which are lists of lists
 ;;;             rather than arrays or matrix-likes.  Providing an
 ;;;             xarray interface to these structures
@@ -98,22 +98,20 @@ justify further processing and initial conditions."
 
 ;;;; XARRAY INTERFACE
 
-(defmethod xtype ((object list))
-  ;; collect and rationalize all types into the most specific covering all.
 #|
+ (defmethod xtype ((object list))
+  ;; collect and rationalize all types into the most specific covering all.
   (loop for sublist in object
      collect (loop do i in (length sublist)
 		collect (type-of (elt sublist 0))))
-|#
   )
+|#
+
 
 (defmethod xrank ((object list))
   "Basically, assuming coherently sized object, return number of
 nested lists in first object."
   (length (xdims object)))
-
-
-
 
 (defun listoflists-dimensions (lol)
   "We assume row-major, that is each sublist denotes a row, and columns are formed by taking the jth element from each list to form the jth column"
@@ -187,6 +185,39 @@ coerced to element-type."
   (let ((vector (make-list (length elements) :element-type element-type)))
     (fill-list-with-list vector elements)))
 |#
+
+
+(defun fill-array-with-list (array list)
+  "Fills array with elements from list, coerced to the appropriate
+  type.  No error checking, meant to be used internally.  Return array."
+  (let ((i 0)
+	(type (array-element-type array)))
+    (dolist (l list)
+      (setf (row-major-aref array i) (coerce l type))
+      (incf i)))
+  array)
+
+(defun numeric-type-classifier (list)
+  "Numeric type classifier, finds the smallest subtype that can
+  accomodate the elements of list, in the ordering fixnum < integer <
+  float < complex < t.  Rational, float (any kind) are classified as
+  double-float, and complex numbers as (complex double-float).  Meant
+  to be used by simple array-constructing functions.
+  Upgraded-array-element-type is called on end result."
+  (upgraded-array-element-type 
+   (case (reduce #'max list
+		 :key (lambda (x)
+			(typecase x
+			  (fixnum 0)
+			  (integer 1)
+			  ((or rational float) 2)
+			  (complex 3)
+			  (t 4))))
+     (0 'fixnum)
+     (1 'integer)
+     (2 'double-float)
+     (3 '(complex double-float))
+     (4 t))))
 
 (defun carray-lol (element-type dimensions &rest elements)
   "Return a (simple-array element-type dimensions) containing elements,
