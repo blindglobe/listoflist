@@ -1,6 +1,6 @@
 ;;; -*- mode: lisp -*-
 
-;;; Time-stamp: <2009-12-20 21:45:45 tony>
+;;; Time-stamp: <2013-11-18 09:55:32 tony>
 ;;; Creation:   <2009-12-10 08:10:39 tony>
 ;;; File:       package.lisp
 ;;; Author:     AJ Rossini <blindglobe@gmail.com>
@@ -26,10 +26,11 @@
    sublists-of-same-size-p
 
    ;; xarray
-   xeltype xtype xrank xdims xref-writeable-p xref listoflist->array ))
+   xeltype #| xtype |#  xrank xdims xref-writeable-p xref listoflist->array ))
 
 (defpackage :listoflist-user
-  (:documentation "verification, sandbox, and illustration package for LISTOFLIST.")
+  (:documentation "verification, sandbox, and illustration package for
+    LISTOFLIST.")
   (:nicknames :lol-user)
   (:use :common-lisp
 	:xarray
