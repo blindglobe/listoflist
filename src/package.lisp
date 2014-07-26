@@ -1,6 +1,6 @@
 ;;; -*- mode: lisp -*-
 
-;;; Time-stamp: <2013-11-18 09:55:32 tony>
+;;; Time-stamp: <2014-07-26 17:30:48 tony>
 ;;; Creation:   <2009-12-10 08:10:39 tony>
 ;;; File:       package.lisp
 ;;; Author:     AJ Rossini <blindglobe@gmail.com>
@@ -38,9 +38,9 @@
 
 (defpackage :listoflist-unittests
   (:documentation "unit-testing structure for LISTOFLIST using LIFT.")
-  (:nicknames :lol-unittests)
+  (:nicknames :lol-unittests :listoflist-test )
   (:use :common-lisp
 	:xarray
 	:listoflist
-	:lift)
+	:clunit)
   (:export lol-ut))

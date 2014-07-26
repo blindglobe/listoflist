@@ -1,65 +1,86 @@
 ;;; -*- mode: lisp -*-
 
-;;; Time-stamp: <2009-12-20 21:57:13 tony>
-;;; Creation:   <2009-04-15 08:43:02 tony>
+;;; Time-stamp: <2014-07-26 17:29:46 tony>
+;;; Creation:   <2014-07-26 16:22:49 tony>
 ;;; File:       unittests-listoflist.lisp
 ;;; Author:     AJ Rossini <blindglobe@gmail.com>
-;;; Copyright:  (c)2009--, AJ Rossini.  MIT License.  See LICENSE.mit in top 
-;;; Purpose:    unittests in LIFT for the listoflist handling.
+;;; Copyright:  (c)2014--, AJ Rossini.  MIT License.  See LICENSE.mit in top 
+;;; Purpose:    unittests in CLUNIT for the listoflist handling.
 
 ;;; What is this talk of 'release'? Klingons do not make software
 ;;; 'releases'.  Our software 'escapes', leaving a bloody trail of
 ;;; designers and quality assurance people in its wake.
 
+;;; To use this as a standalone file, quickload RHO (most likely from
+;;; your local directory) and then consider evaluating piecewise, the
+;;; commented out section at the end is useful for developing new
+;;; unittests as well as processing existing ones.
+
+;; (ql:quickload :clunit)
 (in-package :listoflist-unittests)
 
-(deftestsuite lol-ut ()
-  ((my-lol-1 '((0d0  1d0  2d0  3d0)
-	       (10d0 11d0 12d0 13d0)))
-   (my-lol-2 (list (list 0d0  1d0  2d0  3d0)
-		   (list 10d0 11d0 12d0 13d0)))))
+(defsuite listoflist ())
+
+(deffixture listoflist (@body)
+  (let ((my-lol-1 '((0d0  1d0  2d0  3d0)
+		    (10d0 11d0 12d0 13d0)))
+	(my-lol-2 (list (list 0d0  1d0  2d0  3d0)
+			(list 10d0 11d0 12d0 13d0)))
+
+	(my-ary-1 #2A((0d0 1d0 2d0 3d0)
+		      (10d0 11d0 12d0 13d0)))
+	(mdfl-test (list (list 'a 1 2.1)
+			 (list 'b 2 1.1)
+			 (list 'c 1 2.0)
+			 (list 'd 2 3.0)))
+	(mdfl-test2 (list (list 'a 1 2.1)
+			  (list 'b 2 1.1)
+			  (list 'c 1 )
+			  (list 'd 2 3.0))))
+    @body))
+
 
 ;;; Listoflist tests
 
-(addtest (lol-ut) lol-consdata-1
-	 (ensure 
-	  (listoflistp my-lol-1)))
+(deftest lol-consistency (listoflist)
+  (assert-true (listoflistp my-lol-1))
+  (assert-true (listoflistp my-lol-2))
+  (assert-true  (sublists-of-same-size-p mdfl-test))
+  (assert-false (sublists-of-same-size-p mdfl-test2)))
 
-(addtest (lol-ut) lol-consdata-2
-	 (ensure 
-	  (listoflistp my-lol-2)))
 
-;;; Need to move to CLS, since XARRAY and LISTOFLIST are there.
-(addtest (lol-ut) lol-equalp
+#|
+
+ ;; Need to move to CLS, since XARRAY and LISTOFLIST are there.
+ (addtest (lol-ut) lol-equalp
 	 (ensure
 	  (equalp (dataset (make-instance 'dataframe-array
 					  :storage #2A(('a 'b)
 						       ('c 'd))))
 		  #2A(('a 'b)
 		      ('c 'd)))))
-
-(addtest (lol-ut) lol-same-size-1
-	 (ensure
-	  (let ((*mdfl-test* (list (list 'a 1 2.1)
-				   (list 'b 2 1.1)
-				   (list 'c 1 2.0)
-				   (list 'd 2 3.0))))
-	    (sublists-of-same-size-p *mdfl-test*))))
-
-(addtest (lol-ut) lol-same-size-2
-	 (ensure
-	  (not
-	   (let ((*mdfl-test2*
-		  (list (list 'a 1 2.1)
-			(list 'b 2 1.1)
-			(list 'c 1 )
-			(list 'd 2 3.0))))
-	     (sublists-of-same-size-p *mdfl-test2*)))))
+|#
 
 
-;;;
-;; (run-tests)
-;; #<Results for LOL-UT 5 Tests, 2 Failures, 1 Error>
-;; (describe (run-tests))
+
+#|
+
+ (ql:quickload :listoflist :verbose T)
+ (setf clunit:*clunit-report-format* :default) 
+ (in-package :listoflist-test)
+
+;;; Main call for testing
+
+ (run-suite 'listoflist
+       :use-debugger T
+       :report-progress T)
+
+ (run-test 'lol-same-size
+	  :use-debugger T
+	  :report-progress T)
+
+
+|#
+
 
 
