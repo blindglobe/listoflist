@@ -1,6 +1,6 @@
 ;;; -*- mode: lisp -*-
 
-;;; Time-stamp: <2014-07-26 17:41:28 tony>
+;;; Time-stamp: <2014-07-26 17:48:23 tony>
 ;;; Creation:   <2008-09-08 08:06:30 tony>
 ;;; File:       listoflist.lisp
 ;;; Author:     AJ Rossini <blindglobe@gmail.com>
@@ -76,8 +76,7 @@ return T/nil based on equality."
 (defun sublists-of-same-size-p (lists)
   "Take a list of list, and verify that the sublists are all of the same size.
 returns size-of-sublist if all sublists same size, otherwise nil"
-  (declare (ignore ragged vartypes)
-	   (type list lists))
+  (declare (type list lists))
   (if (apply #'= (map 'list #'length lists))
       (length (nth 0 lists))
       NIL))
@@ -147,17 +146,20 @@ nested lists in first object."
   )
 
 #|
-(defmethod xdim ((object list) axis-number)
+ (defmethod xdim ((object list) axis-number)
   (array-dimension object axis-number))
 
-(defmethod xsize ((object list))
+ (defmethod xsize ((object list))
   (array-total-size object))
 |#
 
-(defmethod xref-writable-p ((object list) &rest subscripts)
+#|
+ (defmethod xref-writable-p ((object list) &rest subscripts)
   "Lists always can be written to -- until we read-only it?!"
   (declare (ignore subscripts))
   t)
+|#
+
 
 (defmethod xref ((object list) &rest subscripts)
   (apply #'aref object subscripts))
