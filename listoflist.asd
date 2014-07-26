@@ -1,6 +1,6 @@
 ;;; -*- mode: lisp -*-
 
-;;; Time-stamp: <2014-07-26 17:29:30 tony>
+;;; Time-stamp: <2014-07-26 17:44:43 tony>
 ;;; Creation:   <2009-12-10 08:10:39 tony>
 ;;; File:       listoflist.asd
 ;;; Author:     AJ Rossini <blindglobe@gmail.com>
@@ -26,7 +26,7 @@
   :description "makes listoflist an xarray'able data structure." 
   :author "AJ Rossini"
   :license "MIT"
-  :depends-on (:xarray :lift)
+  :depends-on (:xarray :clunit)
   :components
   ((:module
     "src"

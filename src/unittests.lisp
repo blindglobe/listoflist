@@ -1,6 +1,6 @@
 ;;; -*- mode: lisp -*-
 
-;;; Time-stamp: <2014-07-26 17:29:46 tony>
+;;; Time-stamp: <2014-07-26 17:40:36 tony>
 ;;; Creation:   <2014-07-26 16:22:49 tony>
 ;;; File:       unittests-listoflist.lisp
 ;;; Author:     AJ Rossini <blindglobe@gmail.com>
@@ -65,6 +65,7 @@
 
 #|
 
+ (ql:quickload :clunit :verbose T)
  (ql:quickload :listoflist :verbose T)
  (setf clunit:*clunit-report-format* :default) 
  (in-package :listoflist-test)
