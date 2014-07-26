@@ -1,6 +1,6 @@
 ;;; -*- mode: lisp -*-
 
-;;; Time-stamp: <2013-11-18 09:53:48 tony>
+;;; Time-stamp: <2014-07-26 17:26:42 tony>
 ;;; Creation:   <2008-09-08 08:06:30 tony>
 ;;; File:       listoflist.lisp
 ;;; Author:     AJ Rossini <blindglobe@gmail.com>
@@ -39,18 +39,18 @@
 
 ;;; IN PROGRESS!
 
-(defun listoflistp (x &key (ragged T) (vartypes nil))
+(defun listoflistp (lists &key (ragged T) (vartypes nil))
   "Test for conformance of structure: list whose sublists are of the
 same size (if ragged is T, then just test that list has elements of
-type list)."
-  (declare (ignore ragged vartypes))
-  ;; (check-type x list) ;; FIXME: need to check first embedded list as well
-  (dotimes (i (length x))
-    (let ((n (length (elt x 0)))
-	  (curr-elt (elt x i)))
-      ;; (check-type curr-elt (elt vartypes i)) ;; need to do type checking
-      (when (not (= n (length curr-elt)))
-	(error "Element ~A does not match initial element length." i)))))
+type list).
+
+FIXME: should have a flag to verify equivalence of types in case
+needed to map to a RHO:DATA-FRAME.
+"
+  (declare (ignore ragged vartypes)
+	   (type list lists))
+  (and (sublists-of-same-size-p lists)
+       T))
 
 (defun transpose-listoflist (listoflist)
   "This function does the moral-equivalent of a matrix transpose on a
@@ -61,10 +61,6 @@ ragged (or at least check).  Could use the listoflistp predicate to
 confirm."
   (apply #'mapcar #'list listoflist))
 
-;; (defparameter LOL-2by3 (list (list 1 2) (list 3 4) (list 5 6)))
-;; (defparameter LOL-3by2 (list (list 1 3 5) (list 2 4 6)))
-;; (transpose-listoflists (transpose-listoflists LOL-2by3))
-;; (transpose-listoflists (transpose-listoflists LOL-3by2))
 
 (defun equal-listoflist (x y)
   "FIXME: This function, when written, should walk through 2 listoflists and
@@ -77,14 +73,13 @@ return T/nil based on equality."
        ))
 
 (defun sublists-of-same-size-p (lists)
-  "WRITEME!  Take a list of list, and verify that the sublists are all of the same size.
+  "Take a list of list, and verify that the sublists are all of the same size.
 returns size-of-sublist if all sublists same size, otherwise nil"
-  (let ((result (reduce #'(lambda (x y)
-			    (if (= x y) y -1))
-			(mapcar #'length lists))))
-    (if (= -1 result)
-	nil
-	result)))
+  (declare (ignore ragged vartypes)
+	   (type list lists))
+  (if (apply #'= (map 'list #'length lists))
+      (length (nth 0 lists))
+      NIL))
 
 
 (defun listsoflists-consistent-dimensions-p (&rest list-of-list-names)
