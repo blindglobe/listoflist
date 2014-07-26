@@ -1,6 +1,6 @@
 ;;; -*- mode: lisp -*-
 
-;;; Time-stamp: <2014-07-26 17:26:42 tony>
+;;; Time-stamp: <2014-07-26 17:41:28 tony>
 ;;; Creation:   <2008-09-08 08:06:30 tony>
 ;;; File:       listoflist.lisp
 ;;; Author:     AJ Rossini <blindglobe@gmail.com>
@@ -39,7 +39,8 @@
 
 ;;; IN PROGRESS!
 
-(defun listoflistp (lists &key (ragged T) (vartypes nil))
+(defun listoflistp (lists  ;; &key (ragged T) (vartypes nil)
+				)
   "Test for conformance of structure: list whose sublists are of the
 same size (if ragged is T, then just test that list has elements of
 type list).
@@ -47,8 +48,8 @@ type list).
 FIXME: should have a flag to verify equivalence of types in case
 needed to map to a RHO:DATA-FRAME.
 "
-  (declare (ignore ragged vartypes)
-	   (type list lists))
+ ;;  (declare (ignore ragged vartypes)
+ ;;	   (type list lists))
   (and (sublists-of-same-size-p lists)
        T))
 
